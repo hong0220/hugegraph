@@ -126,13 +126,13 @@ public class RegisterUtil {
     public static void registerHBase() {
         // Register config
         OptionSpace.register("hbase",
-                "com.baidu.hugegraph.backend.store.hbase.HbaseOptions");
+                "com.baidu.hugegraph.backend.store.hbase.TikvOptions");
         // Register serializer
         SerializerFactory.register("hbase",
-                "com.baidu.hugegraph.backend.store.hbase.HbaseSerializer");
+                "com.baidu.hugegraph.backend.store.hbase.TikvSerializer");
         // Register backend
         BackendProviderFactory.register("hbase",
-                "com.baidu.hugegraph.backend.store.hbase.HbaseStoreProvider");
+                "com.baidu.hugegraph.backend.store.hbase.TikvStoreProvider");
     }
 
     public static void registerRocksDB() {
