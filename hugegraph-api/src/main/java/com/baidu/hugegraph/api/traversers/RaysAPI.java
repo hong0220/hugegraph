@@ -83,6 +83,6 @@ public class RaysAPI extends API {
         HugeTraverser.PathSet paths = traverser.rays(source, dir, edgeLabel,
                                                      depth, degree,
                                                      capacity, limit);
-        return manager.serializer(g).writePaths("rays", paths, false);
+        return manager.serializer(g).writePaths("rays", paths.paths(), false);
     }
 }
