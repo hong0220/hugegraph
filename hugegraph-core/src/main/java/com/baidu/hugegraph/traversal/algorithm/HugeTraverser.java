@@ -422,10 +422,6 @@ public class HugeTraverser {
         return collectionFactory.newIdSet();
     }
 
-    protected static List<Id> newIdList() {
-        return collectionFactory.newIdList();
-    }
-
     protected static <V> Set<V> newSet() {
         return newSet(false);
     }
@@ -514,7 +510,7 @@ public class HugeTraverser {
         }
 
         public List<Id> path() {
-            List<Id> ids = newIdList();
+            List<Id> ids = newList();
             Node current = this;
             do {
                 ids.add(current.id);
