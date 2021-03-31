@@ -71,6 +71,7 @@ import com.baidu.hugegraph.event.EventHub;
 import com.baidu.hugegraph.event.EventListener;
 import com.baidu.hugegraph.exception.NotAllowException;
 import com.baidu.hugegraph.io.HugeGraphIoRegistry;
+import com.baidu.hugegraph.perf.PerfUtil.Watched;
 import com.baidu.hugegraph.rpc.RpcServiceConfig4Client;
 import com.baidu.hugegraph.rpc.RpcServiceConfig4Server;
 import com.baidu.hugegraph.schema.EdgeLabel;
@@ -444,6 +445,7 @@ public class StandardHugeGraph implements HugeGraph {
         return this.storeProvider.loadSystemStore(name);
     }
 
+    @Watched
     private SchemaTransaction schemaTransaction() {
         this.checkGraphNotClosed();
         /*
@@ -463,6 +465,7 @@ public class StandardHugeGraph implements HugeGraph {
         return this.tx.systemTransaction();
     }
 
+    @Watched
     private GraphTransaction graphTransaction() {
         this.checkGraphNotClosed();
         /*
@@ -647,6 +650,7 @@ public class StandardHugeGraph implements HugeGraph {
     }
 
     @Override
+    @Watched
     public Iterator<Edge> edges(Query query) {
         return this.graphTransaction().queryEdges(query);
     }
@@ -718,6 +722,7 @@ public class StandardHugeGraph implements HugeGraph {
     }
 
     @Override
+    @Watched
     public VertexLabel vertexLabelOrNone(Id id) {
         VertexLabel vl = this.schemaTransaction().getVertexLabel(id);
         if (vl == null) {
