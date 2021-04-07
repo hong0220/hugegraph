@@ -33,8 +33,6 @@ import com.baidu.hugegraph.api.graph.EdgeAPI;
 import com.baidu.hugegraph.api.graph.VertexAPI;
 import com.baidu.hugegraph.backend.id.Id;
 import com.baidu.hugegraph.core.GraphManager;
-import com.baidu.hugegraph.perf.PerfUtil;
-import com.baidu.hugegraph.perf.PerfUtil.Watched;
 import com.baidu.hugegraph.server.RestServer;
 import com.baidu.hugegraph.traversal.algorithm.HugeTraverser;
 import com.baidu.hugegraph.traversal.algorithm.ShortestPathTraverser;
@@ -73,27 +71,20 @@ public class ShortestPathAPI extends API {
                   "max degree '{}', skipped degree '{}' and capacity '{}'",
                   graph, source, target, direction, edgeLabel, depth,
                   degree, skipDegree, capacity);
-        //PerfUtil.instance().clear();
-        //PerfUtil.instance().start("sp-get");
-        //try {
-            Id sourceId = VertexAPI.checkAndParseVertexId(source);
-            Id targetId = VertexAPI.checkAndParseVertexId(target);
-            Directions dir = Directions.convert(EdgeAPI.parseDirection(direction));
+        Id sourceId = VertexAPI.checkAndParseVertexId(source);
+        Id targetId = VertexAPI.checkAndParseVertexId(target);
+        Directions dir = Directions.convert(EdgeAPI.parseDirection(direction));
 
-            HugeGraph g = graph(manager, graph);
+        HugeGraph g = graph(manager, graph);
 
-            ShortestPathTraverser traverser = new ShortestPathTraverser(g);
+        ShortestPathTraverser traverser = new ShortestPathTraverser(g);
 
-            List<String> edgeLabels = edgeLabel == null ? ImmutableList.of() :
-                    ImmutableList.of(edgeLabel);
-            HugeTraverser.Path path = traverser.shortestPath(sourceId, targetId,
-                    dir, edgeLabels, depth,
-                    degree, skipDegree,
-                    capacity);
-            return manager.serializer(g).writeList("path", path.vertices());
-        //} finally {
-        //    PerfUtil.instance().end("sp-get");
-        //    LOG.info("option = {}", PerfUtil.instance().toECharts());
-        //}
+        List<String> edgeLabels = edgeLabel == null ? ImmutableList.of() :
+                                  ImmutableList.of(edgeLabel);
+        HugeTraverser.Path path = traverser.shortestPath(sourceId, targetId,
+                                                         dir, edgeLabels, depth,
+                                                         degree, skipDegree,
+                                                         capacity);
+        return manager.serializer(g).writeList("path", path.vertices());
     }
 }

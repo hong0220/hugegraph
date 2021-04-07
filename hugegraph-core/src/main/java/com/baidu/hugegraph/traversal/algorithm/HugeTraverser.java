@@ -60,6 +60,7 @@ import com.baidu.hugegraph.util.CollectionUtil;
 import com.baidu.hugegraph.util.E;
 import com.baidu.hugegraph.util.InsertionOrderUtil;
 import com.baidu.hugegraph.util.collection.CollectionFactory;
+import com.baidu.hugegraph.util.collection.ObjectIntMapping;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -69,7 +70,7 @@ public class HugeTraverser {
     private HugeGraph graph;
 
     private static CollectionFactory collectionFactory;
-    protected IdMapping idMapping;
+    protected ObjectIntMapping idMapping;
 
     public static final String DEFAULT_CAPACITY = "10000000";
     public static final String DEFAULT_ELEMENTS_LIMIT = "10000000";
@@ -492,12 +493,12 @@ public class HugeTraverser {
 
     @Watched
     protected Id id(int code) {
-        return this.idMapping.getId(code);
+        return (Id) this.idMapping.code2Object(code);
     }
 
     @Watched
     protected int code(Id id) {
-        return this.idMapping.getCode(id);
+        return this.idMapping.object2Code(id);
     }
 
     public static class Node {
@@ -659,7 +660,7 @@ public class HugeTraverser {
         }
     }
 
-    public static class PathSet {
+    public static class PathSet implements Set<Path> {
 
         private static final long serialVersionUID = -8237531948776524872L;
 
@@ -669,12 +670,47 @@ public class HugeTraverser {
             return this.paths.add(path);
         }
 
-        public boolean addAll(Collection<Path> collection) {
-            return this.paths.addAll(collection);
+        @Override
+        public boolean remove(Object o) {
+            return this.paths.remove(o);
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            return this.paths.containsAll(c);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Path> c) {
+            return this.paths.addAll(c);
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return this.paths.retainAll(c);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            return this.paths.removeAll(c);
+        }
+
+        @Override
+        public void clear() {
+            this.paths.clear();
+        }
+
+        public boolean addAll(PathSet paths) {
+            return this.paths.addAll(paths.paths);
         }
 
         public boolean isEmpty() {
             return this.paths.isEmpty();
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return this.paths.contains(o);
         }
 
         public int size() {
@@ -687,6 +723,16 @@ public class HugeTraverser {
 
         public Iterator<Path> iterator() {
             return this.paths.iterator();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return this.paths.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            return this.paths.toArray(a);
         }
 
         public Set<Id> vertices() {
