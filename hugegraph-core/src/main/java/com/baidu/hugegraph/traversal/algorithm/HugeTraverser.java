@@ -69,6 +69,7 @@ public class HugeTraverser {
     private HugeGraph graph;
 
     private static CollectionFactory collectionFactory;
+    protected IdMapping idMapping;
 
     public static final String DEFAULT_CAPACITY = "10000000";
     public static final String DEFAULT_ELEMENTS_LIMIT = "10000000";
@@ -489,6 +490,16 @@ public class HugeTraverser {
         return path;
     }
 
+    @Watched
+    protected Id id(int code) {
+        return this.idMapping.getId(code);
+    }
+
+    @Watched
+    protected int code(Id id) {
+        return this.idMapping.getCode(id);
+    }
+
     public static class Node {
 
         private Id id;
@@ -593,6 +604,10 @@ public class HugeTraverser {
 
         public Id crosspoint() {
             return this.crosspoint;
+        }
+
+        public void addToEnd(Id id) {
+            this.vertices.add(id);
         }
 
         public List<Id> vertices() {
