@@ -19,6 +19,9 @@
 
 package com.baidu.hugegraph.api.traversers;
 
+import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_DEGREE;
+import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_PATHS_LIMIT;
+
 import java.util.Set;
 
 import javax.inject.Singleton;
@@ -43,9 +46,6 @@ import com.baidu.hugegraph.traversal.algorithm.SameNeighborTraverser;
 import com.baidu.hugegraph.type.define.Directions;
 import com.baidu.hugegraph.util.Log;
 import com.codahale.metrics.annotation.Timed;
-
-import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_DEGREE;
-import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_PATHS_LIMIT;
 
 @Path("graphs/{graph}/traversers/sameneighbors")
 @Singleton

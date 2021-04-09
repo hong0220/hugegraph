@@ -19,6 +19,8 @@
 
 package com.baidu.hugegraph.api.traversers;
 
+import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_DEGREE;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +29,6 @@ import com.baidu.hugegraph.api.API;
 import com.baidu.hugegraph.traversal.algorithm.steps.EdgeStep;
 import com.baidu.hugegraph.type.define.Directions;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_DEGREE;
 
 public class TraverserAPI extends API {
 

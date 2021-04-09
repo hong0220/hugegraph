@@ -19,10 +19,10 @@
 
 package com.baidu.hugegraph.api.traversers;
 
-import java.util.List;
-
 import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_CAPACITY;
 import static com.baidu.hugegraph.traversal.algorithm.HugeTraverser.DEFAULT_DEGREE;
+
+import java.util.List;
 
 import javax.inject.Singleton;
 import javax.ws.rs.DefaultValue;
